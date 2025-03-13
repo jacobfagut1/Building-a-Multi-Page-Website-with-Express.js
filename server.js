@@ -20,15 +20,21 @@ app.get('/contact', (req, res) => {
   res.sendFile(path.join(__dirname, 'views', 'contact.html'));
 });
 
-// Define the /blog route to dynamically load posts
+// Define the /blog route to dynamically load posts from posts.json
 app.get('/blog', (req, res) => {
   fs.readFile(path.join(__dirname, 'data', 'posts.json'), 'utf8', (err, data) => {
     if (err) {
+      console.error('Error reading blog data:', err);  // Log the error
       res.status(500).send("Error reading blog data.");
       return;
     }
-    const posts = JSON.parse(data);
-    res.send(posts);
+    try {
+      const posts = JSON.parse(data);  // Parse the JSON data
+      res.json(posts);  // Send the blog posts as JSON
+    } catch (parseError) {
+      console.error('Error parsing JSON:', parseError);  // Log any parsing errors
+      res.status(500).send("Error parsing blog data.");
+    }
   });
 });
 

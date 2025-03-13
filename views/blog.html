@@ -8,7 +8,7 @@
 </head>
 <body>
   <h1>Blog</h1>
-  <div id="posts-container"></div>
+  <div id="posts-container"></div>  <!-- Container to dynamically display posts -->
 
   <script>
     // Fetch posts from the server and display them
@@ -16,6 +16,7 @@
       .then(response => response.json())
       .then(posts => {
         const postsContainer = document.getElementById('posts-container');
+        
         posts.forEach(post => {
           const postElement = document.createElement('div');
           postElement.classList.add('post');
